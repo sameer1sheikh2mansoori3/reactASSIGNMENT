@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { UseDispatch, useDispatch } from 'react-redux';
+import { isLoggedIn } from '../features/users/userSlice';
 const FormComponent = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const history = useNavigate();
-
+    const navigate = useNavigate();
+    const dispath = useDispatch()
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         localStorage.setItem('userDetails', JSON.stringify({ name, phone, email }));
-        history('/second-page');
+        dispath(isLoggedIn())
+        navigate('/second-page');
     };
+
+
 
     return (
         <form onSubmit={handleSubmit}>

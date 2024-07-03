@@ -1,13 +1,31 @@
 import React from 'react'
-import { createBrowserRouter, } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import FormComponent from './components/FormComponent'
-const route = createBrowserRouter([{
-  path: "/",
-  element: <FormComponent />
-}])
+import SecondPage from './pages/SecondPage.tsx'
+
+
+
 const App = () => {
+
+
+
+
+
+
   return (
     <>
+
+      <BrowserRouter>
+
+
+        <Routes>
+
+
+          <Route path='/' element={<FormComponent />}></Route>
+          <Route path="/second-page" element={<SecondPage />} />
+        </Routes>
+
+      </BrowserRouter >
     </>
   )
 }
