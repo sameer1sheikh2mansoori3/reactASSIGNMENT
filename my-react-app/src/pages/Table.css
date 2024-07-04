@@ -1,5 +1,31 @@
-.Table {
+/* Table.css */
+
+/* Center the entire page content */
+.second-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw; /* Adjust as needed for full-screen height */
+}
+
+/* Ensure the table container is centered */
+.table-container {
+  width: 100%;
+  max-width: 1200px; /* Adjust max-width as per your design */
+  padding: 20px;
+}
+
+/* Optionally, adjust styles for the DataGrid */
+.MuiDataGrid-root {
+  border: 1px solid #ccc; /* Example border styling */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Example box shadow */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 10px;
+  }
 }
