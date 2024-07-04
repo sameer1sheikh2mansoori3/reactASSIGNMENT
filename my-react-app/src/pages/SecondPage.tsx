@@ -6,6 +6,7 @@ import { UseDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Dropdown from '../components/Dropdown';
+import './Table.css'
 import data from '../Json';
 const columns: GridColDef<(typeof rows)[number]>[] = [
     { field: 'userId', headerName: 'userId', width: 90 },
@@ -55,7 +56,7 @@ export default function SecondPage() {
 
         <>
 
-            <div className={{ width: '100%', marginX: 'auto' }} >
+            <div className='Table' >
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
                         rows={arr}

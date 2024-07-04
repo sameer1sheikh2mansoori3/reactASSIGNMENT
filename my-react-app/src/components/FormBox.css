@@ -1,0 +1,26 @@
+/* FormBox.css */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.form-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-height-image {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+}
