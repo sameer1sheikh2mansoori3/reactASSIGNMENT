@@ -12,6 +12,7 @@ const FormComponent = () => {
         e.preventDefault();
         localStorage.setItem('userDetails', JSON.stringify({ name, phone, email }));
         dispath(isLoggedIn())
+
         navigate('/second-page');
     };
 
