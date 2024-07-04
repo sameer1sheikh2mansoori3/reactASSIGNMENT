@@ -30,6 +30,7 @@ const SecondPage = () => {
         try {
             const userData = await axios.get('https://jsonplaceholder.typicode.com/posts');
             setArr(userData.data);
+            console.log(arr);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

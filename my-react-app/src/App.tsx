@@ -22,7 +22,7 @@ const App = () => {
 
 
           <Route path='/' element={<FormComponent />}></Route>
-          <Route path="/second-page" element={<SecondPage />} />
+          <Route path='second-page' element={<SecondPage />} ></Route>
         </Routes>
 
       </BrowserRouter >
