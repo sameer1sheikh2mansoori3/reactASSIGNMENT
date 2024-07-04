@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { isLoggedIn } from '../features/users/userSlice';
@@ -8,7 +9,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import AddIcon from '@mui/icons-material/Add';
 import LoginIcon from '@mui/icons-material/Login';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+
 import './FormBox.css';
 
 const FormComponent = () => {
@@ -28,7 +29,7 @@ const FormComponent = () => {
         }
     }, [isAlert]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         if (!name.trim() || !phone.trim() || !email.trim()) {
             setIsAlert(true);

@@ -1,31 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Dropdown.js
 import React, { useState } from 'react';
+import './Dropdown.css'; // Import your CSS file
 
-const Dropdown = ({ data }) => {
-  const [isOpen, setIsOpen] = useState({});
-  const [checkedItems, setCheckedItems] = useState({});
+interface DropdownProps {
+  data: { department: string; sub_departments: any[] }[];
+}
 
-  const toggleDropdown = (department) => {
+const Dropdown: React.FC<DropdownProps> = ({ data }) => {
+  const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: string]: any[] }>({});
+
+  const toggleDropdown = (department: string) => {
     setIsOpen((prevState) => ({
       ...prevState,
       [department]: !prevState[department],
     }));
   };
 
-  const handleSelectAll = (department, subDepartments) => {
-    const allSelected = subDepartments.every(
-      (subDept) => checkedItems[department] && checkedItems[department].includes(subDept)
-    );
-    setCheckedItems((prevState) => ({
-      ...prevState,
-      [department]: allSelected ? [] : subDepartments,
-    }));
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  const handleCheck = (department, subDepartment) => {
+  const handleCheck = (department: string, subDepartment: any) => {
     setCheckedItems((prevState) => ({
       ...prevState,
-      [department]: prevState[department] && prevState[department].includes(subDepartment)
+      [department]: prevState[department]?.includes(subDepartment)
         ? prevState[department].filter((item) => item !== subDepartment)
         : [...(prevState[department] || []), subDepartment],
     }));
@@ -34,31 +32,19 @@ const Dropdown = ({ data }) => {
   return (
     <div>
       {data.map(({ department, sub_departments }) => {
-        const allSelected = sub_departments.length > 0 && sub_departments.every(
-          (subDept) => checkedItems[department] && checkedItems[department].includes(subDept)
-        );
         return (
           <div key={department} className="dropdown">
-            <label className="dropdown-toggle">
-              <button onClick={() => toggleDropdown(department)} className="dropdown-toggle-btn">
-                {isOpen[department] ? '-' : '-'}
-              </button>
-              <input
-                type="checkbox"
-                checked={allSelected}
-                onChange={() => handleSelectAll(department, sub_departments)}
-              />
-              {department} ({sub_departments.length})
+            <label className="dropdown-toggle" onClick={() => toggleDropdown(department)}>
+              {isOpen[department] ? '-' : '+'} {department} ({sub_departments.length})
             </label>
-
 
             {isOpen[department] && (
               <ul className="dropdown-menu">
-                {sub_departments.map((subDept) => (
-                  <li key={subDept}>
+                {sub_departments.map((subDept, index) => (
+                  <li key={index}>
                     <input
                       type="checkbox"
-                      checked={checkedItems[department] && checkedItems[department].includes(subDept)}
+                      checked={checkedItems[department]?.includes(subDept)}
                       onChange={() => handleCheck(department, subDept)}
                     />
                     <label>{subDept}</label>

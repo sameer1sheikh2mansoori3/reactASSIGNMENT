@@ -1,7 +1,8 @@
 /* App.css */
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
 }
 
 .dropdown-toggle {
@@ -20,14 +21,59 @@
 }
 
 .dropdown-menu {
-  display: block;
-  position: absolute;
-  background-color: white;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   padding: 12px;
-  list-style: none;
+  list-style-type: none; /* Remove default list-style */
   margin: 0;
-  width: 200px;
+  width: 200px; /* App.css */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px; /* Optional: Add spacing between dropdowns */
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .dropdown-toggle::after {
+    content: ""; /* Optional: Add a visual indicator for dropdown state */
+    margin-left: 5px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    list-style-type: none; /* Remove default list-style */
+    margin: 0;
+    width: 200px;
+    top: calc(100% + 5px); /* Position dropdown menu below the button */
+    left: 0; /* Align dropdown menu with the button */
+  }
+
+  .dropdown-menu li {
+    background-color: rgb(2, 255, 255);
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .dropdown-menu input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .dropdown-menu li {
+    margin-bottom: 5px; /* Optional: Add spacing between items */
+  }
 }
 
 .dropdown-menu li {
@@ -38,4 +84,8 @@
 
 .dropdown-menu input[type="checkbox"] {
   margin-right: 10px;
+}
+
+.dropdown-menu li {
+  margin-bottom: 5px; /* Optional: Add spacing between items */
 }

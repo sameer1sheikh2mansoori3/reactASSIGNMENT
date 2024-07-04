@@ -1,5 +1,6 @@
-import * as React from 'react';
-import { useEffect } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux';
@@ -8,7 +9,6 @@ import axios from 'axios';
 import Dropdown from '../components/Dropdown';
 import './Table.css'; // Ensure Table.css has appropriate styles for centering
 import data from '../Json';
-import { red } from '@mui/material/colors';
 
 const columns: GridColDef[] = [
     { field: 'userId', headerName: 'User ID', width: 90 },
@@ -20,17 +20,23 @@ const columns: GridColDef[] = [
         editable: true,
     },
 ];
-
+interface Post {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+}
 const SecondPage = () => {
-    const [arr, setArr] = React.useState([]);
-    const users = useSelector((state) => state.users);
+    const [arr, setArr] = useState<Post[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const users = useSelector((state: any) => state.users);
     const navigate = useNavigate();
 
     const getUser = async () => {
         try {
             const userData = await axios.get('https://jsonplaceholder.typicode.com/posts');
             setArr(userData.data);
-            console.log(arr);
+            console.log(userData.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -52,10 +58,16 @@ const SecondPage = () => {
                     <DataGrid
                         rows={arr}
                         columns={columns}
-                        pagination
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                        disableSelectionOnClick
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 5,
+                                },
+                            },
+                        }}
+                        pageSizeOptions={[5]}
+                        // checkboxSelection
+                        disableRowSelectionOnClick
                     />
                 </Box>
             </div>
