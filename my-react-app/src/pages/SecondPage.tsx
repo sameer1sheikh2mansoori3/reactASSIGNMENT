@@ -35,20 +35,28 @@ const rows = [
 export default function SecondPage() {
     const [arr, setArr] = React.useState([]);
     let users = useSelector((state) => state);
+    users = users.users
+    console.log(users)
+    const navigate = useNavigate();
+
     const getUser = async () => {
         const userData = await axios.get(`https://jsonplaceholder.typicode.com/posts`)
         setArr(userData.data)
 
     }
-    if (users.value === false) {
-        const navigate = useNavigate();
-        navigate("/")
-        alert("fill the data")
 
-    }
 
 
     useEffect(() => {
+        if (users.value === false) {
+
+
+            alert("fill the data")
+            navigate('/')
+            return;
+
+        }
+
         getUser()
     }, [])
 
