@@ -33,6 +33,7 @@
 .dropdown-menu li {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .dropdown-menu input[type="checkbox"] {

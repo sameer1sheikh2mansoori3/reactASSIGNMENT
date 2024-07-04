@@ -1,58 +1,74 @@
 // Dropdown.js
 import React, { useState } from 'react';
 
-const Dropdown = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [checkedItems, setCheckedItems] = useState([]);
-  const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+const Dropdown = ({ data }) => {
+  const [isOpen, setIsOpen] = useState({});
+  const [checkedItems, setCheckedItems] = useState({});
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-
-  const handleSelectAll = () => {
-    if (checkedItems.length === options.length) {
-      setCheckedItems([]);
-    } else {
-      setCheckedItems(options);
-    }
+  const toggleDropdown = (department) => {
+    setIsOpen((prevState) => ({
+      ...prevState,
+      [department]: !prevState[department],
+    }));
   };
 
-  const handleCheck = (option) => {
-    if (checkedItems.includes(option)) {
-      setCheckedItems(checkedItems.filter((item) => item !== option));
-    } else {
-      setCheckedItems([...checkedItems, option]);
-    }
+  const handleSelectAll = (department, subDepartments) => {
+    const allSelected = subDepartments.every(
+      (subDept) => checkedItems[department] && checkedItems[department].includes(subDept)
+    );
+    setCheckedItems((prevState) => ({
+      ...prevState,
+      [department]: allSelected ? [] : subDepartments,
+    }));
   };
 
-  const isAllSelected = checkedItems.length === options.length;
+  const handleCheck = (department, subDepartment) => {
+    setCheckedItems((prevState) => ({
+      ...prevState,
+      [department]: prevState[department] && prevState[department].includes(subDepartment)
+        ? prevState[department].filter((item) => item !== subDepartment)
+        : [...(prevState[department] || []), subDepartment],
+    }));
+  };
 
   return (
-    <div className="dropdown">
-      <label className="dropdown-toggle">
-        <input
-          type="checkbox"
-          checked={isAllSelected}
-          onChange={handleSelectAll}
-        />
-        Select Options ({options.length})
-      </label>
-      <button onClick={toggleDropdown} className="dropdown-toggle-btn">
-        &#9660;
-      </button>
-      {isOpen && (
-        <ul className="dropdown-menu">
-          {options.map((option) => (
-            <li key={option}>
+    <div>
+      {data.map(({ department, sub_departments }) => {
+        const allSelected = sub_departments.length > 0 && sub_departments.every(
+          (subDept) => checkedItems[department] && checkedItems[department].includes(subDept)
+        );
+        return (
+          <div key={department} className="dropdown">
+            <label className="dropdown-toggle">
+              <button onClick={() => toggleDropdown(department)} className="dropdown-toggle-btn">
+                {isOpen[department] ? '-' : '-'}
+              </button>
               <input
                 type="checkbox"
-                checked={checkedItems.includes(option)}
-                onChange={() => handleCheck(option)}
+                checked={allSelected}
+                onChange={() => handleSelectAll(department, sub_departments)}
               />
-              <label>{option}</label>
-            </li>
-          ))}
-        </ul>
-      )}
+              {department} ({sub_departments.length})
+            </label>
+
+
+            {isOpen[department] && (
+              <ul className="dropdown-menu">
+                {sub_departments.map((subDept) => (
+                  <li key={subDept}>
+                    <input
+                      type="checkbox"
+                      checked={checkedItems[department] && checkedItems[department].includes(subDept)}
+                      onChange={() => handleCheck(department, subDept)}
+                    />
+                    <label>{subDept}</label>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
